@@ -1,0 +1,9 @@
+What's new in version 1.0.0:
+
+🎉 Initial Release!
+- AI-powered dish discovery and recipe generation
+- Weekly meal planning with calendar view
+- Vegetarian day configuration
+- Offline meal planning
+- Beautiful Material Design interface
+- Local data storage for privacy

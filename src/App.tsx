@@ -23,6 +23,12 @@ import { DISHES } from './data/dishes';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
+const parsePlanDate = (dateString: string) => {
+  const [datePart] = dateString.split('T');
+  const [year, month, day] = datePart.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
 export default function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [settings, setSettings] = useState<UserSettings>(() => {
@@ -66,7 +72,7 @@ export default function App() {
   // Sync plan with veg settings
   useEffect(() => {
     setPlan(prev => prev.map(day => {
-      const date = new Date(day.date);
+      const date = parsePlanDate(day.date);
       const dayOfWeek = date.getDay();
       const shouldBeVeg = settings.vegDays.includes(dayOfWeek);
       
@@ -95,7 +101,7 @@ export default function App() {
     const parsedPlan: DayPlan[] = savedPlan ? JSON.parse(savedPlan) : [];
     
     const hasMonthPlan = parsedPlan.some(p => {
-      const d = new Date(p.date);
+      const d = parsePlanDate(p.date);
       return d.getFullYear() === currentDate.getFullYear() && d.getMonth() === currentDate.getMonth();
     });
 
@@ -103,7 +109,7 @@ export default function App() {
       const newMonthPlan = generateMonthlyPlan(currentDate.getFullYear(), currentDate.getMonth(), settings, allDishes);
       setPlan(prev => {
         const filtered = prev.filter(p => {
-          const d = new Date(p.date);
+          const d = parsePlanDate(p.date);
           return d.getFullYear() !== currentDate.getFullYear() || d.getMonth() !== currentDate.getMonth();
         });
         return [...filtered, ...newMonthPlan];
@@ -196,14 +202,18 @@ export default function App() {
   const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
   
   const currentMonthPlan = plan.filter(p => {
-    const d = new Date(p.date);
+    const d = parsePlanDate(p.date);
     return d.getFullYear() === year && d.getMonth() === currentDate.getMonth();
-  }).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }).sort((a, b) => parsePlanDate(a.date).getTime() - parsePlanDate(b.date).getTime());
+
+  const currentMonthMap = new Map<number, DayPlan>(
+    currentMonthPlan.map(day => [parsePlanDate(day.date).getDate(), day])
+  );
 
   const calendarDays = Array.from({ length: 42 }, (_, i) => {
     const dayNum = i - firstDayOfMonth + 1;
     if (dayNum > 0 && dayNum <= daysInMonth) {
-      return currentMonthPlan[dayNum - 1];
+      return currentMonthMap.get(dayNum) ?? null;
     }
     return null;
   });

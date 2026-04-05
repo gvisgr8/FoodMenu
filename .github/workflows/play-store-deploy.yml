@@ -1,0 +1,88 @@
+name: Deploy to Google Play Store
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      track:
+        description: 'Release track'
+        required: true
+        default: 'internal'
+        type: choice
+        options:
+          - internal
+          - beta
+          - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
+    - name: Create keystore
+      run: |
+        mkdir -p app
+        keytool -genkey -v -keystore app/release.keystore \
+          -alias release-key \
+          -keyalg RSA \
+          -keysize 2048 \
+          -validity 10000 \
+          -storepass ${{ secrets.STORE_PASSWORD }} \
+          -keypass ${{ secrets.KEY_PASSWORD }} \
+          -dname "CN=Food Menu, OU=Development, O=FoodMenu, L=City, ST=State, C=US"
+
+    - name: Build release bundle
+      run: ./gradlew bundleRelease
+      working-directory: android
+
+    - name: Upload bundle to Play Store
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        packageName: com.foodmenu
+        releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+        track: ${{ github.event.inputs.track || 'internal' }}
+        status: completed
+        whatsNewDirectory: android/fastlane/metadata/android/en-US/changelogs/
+
+    - name: Create GitHub release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          ## Changes
+          - Automated release to Google Play Store
+          - Track: ${{ github.event.inputs.track || 'internal' }}
+        draft: false
+        prerelease: ${{ contains(github.event.inputs.track, 'beta') || contains(github.event.inputs.track, 'internal') }}

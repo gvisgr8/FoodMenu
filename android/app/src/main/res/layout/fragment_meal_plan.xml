@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/meal_plan_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Today's Meal Plan"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textStyle="bold"
+            android:paddingBottom="12dp" />
+
+        <ProgressBar
+            android:id="@+id/meal_plan_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/breakfast_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/breakfast_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Breakfast"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <TextView
+                android:id="@+id/breakfast_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No breakfast assigned yet"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lunch_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/lunch_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lunch"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <TextView
+                android:id="@+id/lunch_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No lunch assigned yet"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dinner_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/dinner_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dinner"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+            <TextView
+                android:id="@+id/dinner_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No dinner assigned yet"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

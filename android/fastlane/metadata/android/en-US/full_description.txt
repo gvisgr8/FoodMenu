@@ -1,0 +1,23 @@
+Food Menu is your intelligent meal planning companion that makes healthy eating enjoyable and effortless.
+
+✨ **AI-Powered Dish Discovery**
+- Add any dish by name and let AI generate complete recipes
+- Get detailed ingredients, cooking instructions, and nutritional insights
+- Discover new cuisines and cooking techniques
+
+🍽️ **Smart Meal Planning**
+- Plan your entire week with drag-and-drop simplicity
+- Set vegetarian days for balanced nutrition
+- Track meal preferences and dietary restrictions
+
+📱 **Beautiful, Intuitive Interface**
+- Clean Material Design with dark mode support
+- Offline functionality - plan meals anywhere
+- Quick access to your favorite dishes
+
+🏠 **Local Data Storage**
+- All your meal plans stored securely on device
+- No internet required for planning
+- Privacy-focused - your data stays on your phone
+
+Perfect for busy professionals, families, and anyone who wants to eat healthier without the hassle of meal planning!

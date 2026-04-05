@@ -31,7 +31,7 @@ export function generateMonthlyPlan(year: number, month: number, settings: UserS
     updateRecent(recentDishes.dinner, dinner.id);
 
     plan.push({
-      date: date.toISOString(),
+      date: date.toISOString().split('T')[0],
       breakfast: breakfast.id,
       lunch: lunch.id,
       dinner: dinner.id,
