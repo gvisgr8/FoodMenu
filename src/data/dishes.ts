@@ -93,7 +93,7 @@ export const DISHES: Dish[] = [
       'Cook until water is absorbed and vermicelli is soft.',
       'Garnish with lemon and coriander.'
     ],
-    image: 'https://images.unsplash.com/photo-1612531386530-97286d97c2d2?auto=format&fit=crop&q=80&w=400',
+    image: 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&q=80&w=400',
     description: 'Savory roasted vermicelli cooked with mixed vegetables and spices.'
   },
   {
@@ -124,7 +124,7 @@ export const DISHES: Dish[] = [
       'Shape into donuts and deep fry until golden brown.',
       'Serve hot with sambar and coconut chutney.'
     ],
-    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400',
+    image: 'https://images.unsplash.com/photo-1601050690597-df056fb01793?auto=format&fit=crop&q=80&w=400',
     description: 'Crispy deep-fried savory donuts made from black gram batter.'
   },
   {
@@ -140,7 +140,7 @@ export const DISHES: Dish[] = [
       'Place potato filling in the center and fold.',
       'Serve with sambar and chutney.'
     ],
-    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400',
+    image: 'https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&q=80&w=400',
     description: 'Thin, crispy fermented rice crepe stuffed with spiced potatoes.'
   },
   {
@@ -154,7 +154,7 @@ export const DISHES: Dish[] = [
       'Prepare sambar with lentils, vegetables, and spices.',
       'Serve soft idlis dipped in hot sambar.'
     ],
-    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=400',
+    image: 'https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&q=80&w=400',
     description: 'Soft, fluffy steamed rice cakes served with lentil vegetable stew.'
   },
 

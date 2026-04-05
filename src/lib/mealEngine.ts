@@ -5,7 +5,7 @@ import { DISHES } from '../data/dishes';
  * Generates a meal plan for a given month, ensuring no repeats for 14 days
  * and respecting vegetarian day settings.
  */
-export function generateMonthlyPlan(year: number, month: number, settings: UserSettings): DayPlan[] {
+export function generateMonthlyPlan(year: number, month: number, settings: UserSettings, allDishes: Dish[] = DISHES): DayPlan[] {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const plan: DayPlan[] = [];
   
@@ -21,9 +21,9 @@ export function generateMonthlyPlan(year: number, month: number, settings: UserS
     const dayOfWeek = date.getDay();
     const isVegDay = settings.vegDays.includes(dayOfWeek);
 
-    const breakfast = getRandomDish('breakfast', isVegDay, recentDishes.breakfast);
-    const lunch = getRandomDish('lunch', isVegDay, recentDishes.lunch);
-    const dinner = getRandomDish('dinner', isVegDay, recentDishes.dinner);
+    const breakfast = getRandomDish('breakfast', isVegDay, recentDishes.breakfast, allDishes);
+    const lunch = getRandomDish('lunch', isVegDay, recentDishes.lunch, allDishes);
+    const dinner = getRandomDish('dinner', isVegDay, recentDishes.dinner, allDishes);
 
     // Update recent dishes (keep last 14)
     updateRecent(recentDishes.breakfast, breakfast.id);
@@ -42,8 +42,8 @@ export function generateMonthlyPlan(year: number, month: number, settings: UserS
   return plan;
 }
 
-function getRandomDish(type: MealType, mustBeVeg: boolean, recentIds: string[]): Dish {
-  let available = DISHES.filter(d => d.type.includes(type));
+export function getRandomDish(type: MealType, mustBeVeg: boolean, recentIds: string[], allDishes: Dish[] = DISHES): Dish {
+  let available = allDishes.filter(d => d.type.includes(type));
   
   if (mustBeVeg) {
     available = available.filter(d => d.isVegetarian);
@@ -66,12 +66,12 @@ function updateRecent(list: string[], id: string) {
   }
 }
 
-export function getDishById(id: string): Dish | undefined {
-  return DISHES.find(d => d.id === id);
+export function getDishById(id: string, allDishes: Dish[] = DISHES): Dish | undefined {
+  return allDishes.find(d => d.id === id);
 }
 
-export function getAlternativeDishes(type: MealType, mustBeVeg: boolean, currentId: string): Dish[] {
-  return DISHES.filter(d => 
+export function getAlternativeDishes(type: MealType, mustBeVeg: boolean, currentId: string, allDishes: Dish[] = DISHES): Dish[] {
+  return allDishes.filter(d => 
     d.type.includes(type) && 
     (!mustBeVeg || d.isVegetarian) && 
     d.id !== currentId
