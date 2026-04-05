@@ -113,10 +113,16 @@ export default function App() {
 
   const handleAddDish = async () => {
     if (!newDishName.trim()) return;
+
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_actual_api_key_here') {
+      alert("Please set your GEMINI_API_KEY in the .env file first.");
+      return;
+    }
+
     setIsAddingDish(true);
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-1.5-flash",
         contents: `Provide details for the Indian dish: "${newDishName}". Include if it's vegetarian, its typical meal types (breakfast, lunch, dinner), ingredients, instructions, and a short description. Also provide a keyword for finding a food photo of it.`,
         config: {
           responseMimeType: "application/json",
@@ -153,7 +159,8 @@ export default function App() {
       setIsAddDishOpen(false);
     } catch (error) {
       console.error("Error adding dish:", error);
-      alert("Failed to add dish. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
+      alert(`Failed to add dish: ${errorMessage}. Please check your API key and try again.`);
     } finally {
       setIsAddingDish(false);
     }
