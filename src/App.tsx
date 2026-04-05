@@ -114,15 +114,16 @@ export default function App() {
   const handleAddDish = async () => {
     if (!newDishName.trim()) return;
 
-    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_actual_api_key_here') {
-      alert("Please set your GEMINI_API_KEY in the .env file first.");
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_local_api_key_here' || process.env.GEMINI_API_KEY === 'your_actual_api_key_here') {
+      alert("Please set your GEMINI_API_KEY in the .env file first. Get it from https://aistudio.google.com/app/apikey");
       return;
     }
 
     setIsAddingDish(true);
     try {
+      
       const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "models/gemini-2.5-flash",
         contents: `Provide details for the Indian dish: "${newDishName}". Include if it's vegetarian, its typical meal types (breakfast, lunch, dinner), ingredients, instructions, and a short description. Also provide a keyword for finding a food photo of it.`,
         config: {
           responseMimeType: "application/json",
