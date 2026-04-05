@@ -1,0 +1,5 @@
+{
+  "name": "Desi Meal Planner",
+  "description": "A comprehensive North Indian meal planning app with monthly calendar views, recipe instructions, and vegetarian day settings.",
+  "requestFramePermissions": ["geolocation"]
+}
